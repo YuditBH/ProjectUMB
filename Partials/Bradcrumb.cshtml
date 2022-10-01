@@ -1,0 +1,19 @@
+﻿@using Umbraco.Web.Models;
+@inherits UmbracoViewPage
+@using Umbraco.Web.Models.PublishedContent;
+
+@{ var selection = Model.Ancestors().ToArray(); }
+
+@if (selection.Length > 0)
+{
+    <ul class="breadcrumb">
+        @* For each page in the ancestors collection which have been ordered by Level (so we start with the highest top node first) *@
+        @foreach (var item in selection.OrderBy(x => x.Level))
+        {
+            <li><a href="@item.Url">@item.Name</a> <span class="divider">/</span></li>
+        }
+
+        @* Display the current page as the last item in the list *@
+        <li class="active">@Model.Name</li>
+    </ul>
+}

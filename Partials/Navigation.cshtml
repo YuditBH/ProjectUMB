@@ -1,0 +1,55 @@
+﻿@inherits UmbracoViewPage  
+
+@{ 
+    var homePage = Model.AncestorOrSelf<Home>();
+    var navItems = homePage.Children.Where(x=> x.IsVisible());
+
+}
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="/">@Umbraco.GetDictionaryValue("Site.Name")</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            @Umbraco.GetDictionaryValue("Navigation.Menu")
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="@homePage.Url">@homePage.Name</a></li>
+                @if (navItems != null && navItems.Any())
+                {
+                    foreach (var item in navItems)
+                    {
+                        var itemChildren = item.Children.Where(x => x.IsVisible());
+                        bool hasChildren = itemChildren != null && itemChildren.Any();
+
+                        if (hasChildren && item.ContentType.Alias!="articleList")
+                        {
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">@item.Name</a>
+                                <div class="dropdown-menu">
+                                    @foreach (var sub in itemChildren)
+                                    {
+                                    <a href="@sub.Url" class="dropdown-item">@sub.Name</a>
+
+                                    }
+                                    <a href="#" class="dropdown-item">Drafts</a>
+                                    <a href="#" class="dropdown-item">Sent Items</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item">Trash</a>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link px-lg-3 py-3 py-lg-4" href="@item.Url">@item.Name</a>
+                            </li>
+                        }
+
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</nav>

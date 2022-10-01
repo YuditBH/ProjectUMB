@@ -1,0 +1,109 @@
+﻿@using Umbraco.Web.Models;
+@inherits UmbracoViewPage
+@using Umbraco.Web.Models.PublishedContent;
+
+
+@{
+    var homePage = Model.AncestorOrSelf<Home>();
+    var socialLinks = homePage.Value<IEnumerable<IPublishedElement>>("socialLinks");
+    var footerColumns = homePage.Value<IEnumerable<IPublishedElement>>("seoLinks");
+}
+
+<!-- Footer-->
+<footer class="border-top">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+
+                <div class="small text-center text-muted fst-italic">Copyright &copy; @Umbraco.GetDictionaryValue("Footer.copyrightName")</div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-white text-muted">
+    <!-- Section: Social media -->
+    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+        <!-- Left -->
+        <div class="me-5 d-none d-lg-block">
+            <span>Get connected with us on social networks:</span>
+        </div>
+        <!-- Left -->
+        <!-- Right -->
+        <div>
+            @if (socialLinks != null && socialLinks.Any())
+            {
+                <ul class="list-inline text-center">
+                    @foreach (var item in socialLinks)
+                    {
+                        var _link = item.Value<Link>("link");
+                        var iconClass = item.Value<string>("iconClass");
+
+                        <li class="list-inline-item">
+                            <a href="@_link.Url" target="@_link.Target">
+                                <span class="@iconClass">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab @iconClass fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            }
+        </div>
+        <!-- Right -->
+    </section>
+    <!-- Section: Social media -->
+    <!-- Section: Links  -->
+    <section class="">
+        <div class="container text-center text-md-start mt-5">
+            <!-- Grid row -->
+            <div class="row mt-3">
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <!-- Content -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        <i class="fas fa-gem me-3 text-secondary"></i>Company name
+                    </h6>
+                    <p>
+                        Here you can use rows and columns to organize your footer content. Lorem ipsum
+                        dolor sit amet, consectetur adipisicing elit.
+                    </p>
+                </div>
+                <!-- Grid column -->
+                <!-- Grid column -->
+                @{if (footerColumns != null && footerColumns.Any())
+                    {
+                        foreach (var col in footerColumns)
+                        {
+                            var _title = col.Value<string>("title");
+                            var linkList = col.Value<IEnumerable<Umbraco.Web.Models.Link>>("links");
+
+                            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
+                                <!-- Links -->
+                                <h6 class="text-uppercase fw-bold mb-4">
+                                    @_title
+                                </h6>
+                                @if (linkList != null && linkList.Any())
+                                {
+                                    foreach (var item in linkList)
+                                    {
+                                        <p>
+                                            <a href="@item.Url" target="@item.Target" class="text-reset">@item.Name</a>
+                                        </p>
+
+                                    }
+                                }
+                            </div>
+                        }
+
+                    }
+                }
+            </div>
+            <!-- Grid row -->
+        </div>
+    </section>
+</footer>
+<!-- Footer -->

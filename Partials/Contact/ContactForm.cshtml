@@ -1,0 +1,258 @@
+﻿@using Umbraco.Web.Models;
+@using UProject.ViewModuls;
+@using UProject.Controllers;
+@using System.Web.Mvc.Html
+@inherits UmbracoViewPage<UProject.ViewModuls.ContactViewModul>
+
+@* Added check to see if we added the recaptcha to site settings *@
+@*@if (!string.IsNullOrEmpty(Model.RecaptchaSiteKey))
+    {
+        <script src="https://www.google.com/recaptcha/api.js?render=@Model.RecaptchaSiteKey"></script>
+        <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@Model.RecaptchaSiteKey',
+                { action: 'contact_us' })
+                .then(function (token) { $('#GoogleCaptchaToken').val(token) });
+        });
+        </script>
+    }
+*@
+@if ((string)TempData["status"] == "OK")
+{
+    @* show ok message *@
+    <text>
+        <div class="container">
+            <div class="row">
+                <div class="col text-center p-5">
+                    <i class="far fa-5x fa-thumbs-up"></i>
+                    <div>
+                        Thanks for your comments.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </text>
+}
+else
+{
+        <div id="form-outer">
+            <div class="content">
+                <div class="table">
+                    <div class="table-cell">
+                        <h2 class="title_section title-2 sm-global sm-splittext sm-active" data-smprop="{&quot;type&quot;:&quot;split&quot;,&quot;threshold&quot;:0.02}"><div style="position:relative;display:inline-block;" class="word"><div style="position: relative; display: inline-block; transition-delay: 0s;" class="char">נ</div><div style="position: relative; display: inline-block; transition-delay: 0.0175s;" class="char">ש</div><div style="position: relative; display: inline-block; transition-delay: 0.035s;" class="char">מ</div><div style="position: relative; display: inline-block; transition-delay: 0.0525s;" class="char">ח</div></div> <div style="position:relative;display:inline-block;" class="word"><div style="position: relative; display: inline-block; transition-delay: 0.07s;" class="char">ל</div><div style="position: relative; display: inline-block; transition-delay: 0.0875s;" class="char">ע</div><div style="position: relative; display: inline-block; transition-delay: 0.105s;" class="char">מ</div><div style="position: relative; display: inline-block; transition-delay: 0.1225s;" class="char">ו</div><div style="position: relative; display: inline-block; transition-delay: 0.14s;" class="char">ד</div></div> <div style="position:relative;display:inline-block;" class="word"><div style="position: relative; display: inline-block; transition-delay: 0.1575s;" class="char">ל</div><div style="position: relative; display: inline-block; transition-delay: 0.175s;" class="char">ש</div><div style="position: relative; display: inline-block; transition-delay: 0.1925s;" class="char">י</div><div style="position: relative; display: inline-block; transition-delay: 0.21s;" class="char">ר</div><div style="position: relative; display: inline-block; transition-delay: 0.2275s;" class="char">ו</div><div style="position: relative; display: inline-block; transition-delay: 0.245s;" class="char">ת</div><div style="position: relative; display: inline-block; transition-delay: 0.2625s;" class="char">כ</div><div style="position: relative; display: inline-block; transition-delay: 0.28s;" class="char">ם</div></div> <div class="original_text">נשמח לעמוד לשירותכם </div></h2>
+                        <p class="paragraph sm-global sm-fadein sm-active" data-smprop="{&quot;type&quot;:&quot;class&quot;,&quot;threshold&quot;:0.1}">
+                            <strong class="font_xl">
+                                שעות הפעילות של מרכז השירות והמידע:  ימים א'-ה' בין השעות 8:00-16:30  <br>טלפון: 03-7752000, בנוסף ניתן להשאיר פרטים בטופס יצירת הקשר באתר ונציגנו יחזרו אליך בהקדם
+                            </strong>
+                        </p><div class="must_text">שדות המסומנים ב* הינם שדות חובה</div>
+                        <p></p>
+                        <div class="form_ui font_m clear sm-global sm-fadein sm-active" data-smprop="{&quot;type&quot;:&quot;class&quot;,&quot;threshold&quot;:0.1}">
+                            <form action="/surgeries/robotic-prostate/" class="" enctype="multipart/form-data" id="ContactForm" method="post">
+                                <input id="SelectedDepartmentName" name="SelectedDepartmentName" type="hidden" value="פניות הציבור"><input id="SelectedDepartmentSubName" name="SelectedDepartmentSubName" type="hidden" value=""><input data-val="true" data-val-number="The field CurrentPageId must be a number." data-val-required="The CurrentPageId field is required." id="CurrentPageId" name="CurrentPageId" type="hidden" value="1752"><input id="contactCaptcha1" name="gRecaptchaResponse" type="hidden" value="">				<div class="input_c must">
+                                    <div class="input">
+                                        <span class="field-validation-valid" data-valmsg-for="ContactFirstName" data-valmsg-replace="true"></span>
+                                        <label class="label must" for="ContactFirstName" id="lblContactFirstName">שם פרטי</label>
+                                        <input class="input_text" data-val="true" data-val-required="שם פרטי הוא שדה חובה" id="ContactFirstName" maxlength="30" name="ContactFirstName" type="text" value="">
+
+                                    </div>
+                                </div>
+                                <div class="input_c must">
+                                    <div class="input">
+                                        <span class="field-validation-valid" data-valmsg-for="ContactLastName" data-valmsg-replace="true"></span>
+                                        <label class="label must" for="ContactLastName" id="lblContactLLastName">שם משפחה</label>
+                                        <input class="input_text" data-val="true" data-val-required="שם  משפחה הוא שדה חובה" id="ContactLastName" maxlength="30" name="ContactLastName" type="text" value="">
+
+                                    </div>
+                                </div>
+                                <div class="input_c must">
+                                    <div class="input">
+                                        <span class="field-validation-valid" data-valmsg-for="ContactPhone" data-valmsg-replace="true"></span>
+                                        <label class="label" for="ContactPhone">טלפון</label>
+                                        <input class="input_text ltr" data-val="true" data-val-regex="מספר טלפון אינו תקין" data-val-regex-pattern="[0-9\s\-]+" data-val-required="טלפון הוא שדה חובה" id="ContactPhone" maxlength="11" name="ContactPhone" type="text" value="">
+
+                                    </div>
+                                </div>
+                                <div class="input_c must">
+                                    <div class="input">
+                                        <span class="field-validation-valid" data-valmsg-for="ContactEmail" data-valmsg-replace="true"></span>
+                                        <label class="label" for="ContactEmail">כתובת מייל</label>
+                                        <input class="input_text ltr" data-val="true" data-val-regex="כתובת דוא&quot;ל אינה תקינה" data-val-regex-pattern="^[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]$[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$" data-val-required="דוא&quot;ל הוא שדה חובה" id="ContactEmail" maxlength="100" name="ContactEmail" type="text" value="">
+
+                                    </div>
+                                </div>
+                                <div class="input_c must">
+                                    <span class="field-validation-valid" data-valmsg-for="SelectedDepartmentId" data-valmsg-replace="true"></span>
+
+                                    <div class="cselect_cont ">
+                                        <select class="cselect cselect_select" data-val="true" data-val-required="שדה חובה" id="departmentsList" name="SelectedDepartmentId">
+                                            <option value="">נושא הפנייה</option>
+                                            <option value="מידע בנושא ניתוחים ובדיקות">מידע בנושא ניתוחים ובדיקות</option>
+                                            <option value="זימון תורים למכונים ומרפאות">זימון תורים למכונים ומרפאות</option>
+                                            <option value="המלצה על רופאים מומחים">המלצה על רופאים מומחים</option>
+                                            <option value="מכון דימות – רנטגן, אולטרסאונד ו-CT">מכון דימות – רנטגן, אולטרסאונד ו-CT</option>
+                                            <option value="בדיקת קורונה">בדיקת קורונה</option>
+                                            <option value="פניות הציבור">פניות הציבור</option>
+                                        </select><div class="cselect_custom"><a href="javascript:;" class="title title_open"><span class="text">המלצה על רופאים מומחים</span><span class="icon icon-chev_down"></span></a><div class="list"><div class="title title_list"><span class="text">המלצה על רופאים מומחים</span><span class="icon icon-chev_down"></span></div><ul class="scrollbar-inner"><li data-value="" class="show" aria-label="נושא הפנייה" role="button"><span>נושא הפנייה</span></li><li data-value="מידע בנושא ניתוחים ובדיקות" class="show" aria-label="מידע בנושא ניתוחים ובדיקות" role="button"><span>מידע בנושא ניתוחים ובדיקות</span></li><li data-value="זימון תורים למכונים ומרפאות" class="show" aria-label="זימון תורים למכונים ומרפאות" role="button"><span>זימון תורים למכונים ומרפאות</span></li><li data-value="המלצה על רופאים מומחים" class="show checked active" aria-label="המלצה על רופאים מומחים" role="button"><span>המלצה על רופאים מומחים</span></li><li data-value="מכון דימות – רנטגן, אולטרסאונד ו-CT" class="show" aria-label="מכון דימות – רנטגן, אולטרסאונד ו-CT" role="button"><span>מכון דימות – רנטגן, אולטרסאונד ו-CT</span></li><li data-value="בדיקת קורונה" class="show" aria-label="בדיקת קורונה" role="button"><span>בדיקת קורונה</span></li><li data-value="פניות הציבור" class="show" aria-label="פניות הציבור" role="button"><span>פניות הציבור</span></li></ul></div></div>
+                                    </div>
+
+
+                                </div>
+                                <div class="input_c subDepartment must">
+                                    <span class="field-validation-valid" data-valmsg-for="SelectedDepartmentSubId" data-valmsg-replace="true"></span>
+
+                                    <div class="cselect_cont ">
+                                        <select class="cselect cselect_select" id="subDepartmentsList" name="SelectedDepartmentSubId">
+                                            <option value="0">תת מחלקה</option>
+                                            <option value="prodware@raphaelhospitals.co.il;moriay@tvuna.co.il;1@uu.co">אורולוגיה</option>
+                                            <option value="prodware@raphaelhospitals.co.il;moriay@tvuna.co.il;2@uu.co">אורתופדיה</option>
+                                            <option value="prodware@raphaelhospitals.co.il;moriay@tvuna.co.il;3@uu.co">אף אוזן גרון</option>
+                                            <option value="prodware@raphaelhospitals.co.il;moriay@tvuna.co.il;4@uu.co">גינקולוגיה</option>
+                                            <option value="prodware@raphaelhospitals.co.il;moriay@tvuna.co.il;5@uu.co">גסטרואנתרולוגיה</option>
+                                            <option value="prodware@raphaelhospitals.co.il;moriay@tvuna.co.il;6@uu.co">כירורגיה</option>
+                                            <option value="prodware@raphaelhospitals.co.il;moriay@tvuna.co.il;7@uu.co">פלסטיקה</option>
+                                        </select><div class="cselect_custom"><a href="javascript:;" class="title title_open"><span class="text">כירורגיה</span><span class="icon icon-chev_down"></span></a><div class="list"><div class="title title_list"><span class="text">כירורגיה</span><span class="icon icon-chev_down"></span></div><ul class="scrollbar-inner"><li data-value="0" class="">תת מחלקה</li><li data-value="prodware@raphaelhospitals.co.il;moriay@tvuna.co.il;1@uu.co" class="">אורולוגיה</li><li data-value="prodware@raphaelhospitals.co.il;moriay@tvuna.co.il;2@uu.co">אורתופדיה</li><li data-value="prodware@raphaelhospitals.co.il;moriay@tvuna.co.il;3@uu.co">אף אוזן גרון</li><li data-value="prodware@raphaelhospitals.co.il;moriay@tvuna.co.il;4@uu.co" class="">גינקולוגיה</li><li data-value="prodware@raphaelhospitals.co.il;moriay@tvuna.co.il;5@uu.co" class="">גסטרואנתרולוגיה</li><li data-value="prodware@raphaelhospitals.co.il;moriay@tvuna.co.il;6@uu.co" class="checked active">כירורגיה</li><li data-value="prodware@raphaelhospitals.co.il;moriay@tvuna.co.il;7@uu.co">פלסטיקה</li></ul></div></div>
+                                    </div>
+
+
+                                </div>
+                                <div class="input_c textarea">
+                                    <div class="input input_textarea">
+
+                                        <label class="label" for="ContactMessage">פנייה</label>
+                                        <textarea class="input_text" cols="20" id="ContactMessage" maxlength="400" name="ContactMessage" rows="2"></textarea>
+
+                                    </div>
+                                </div>
+                                <div class="sep"></div>
+                                <div class="input_c input_checkbox">
+                                    <div class="checkbox  font_r">
+                                        <span class="field-validation-valid" data-valmsg-for="ContactAgree" data-valmsg-replace="true"></span>
+                                        <input class="" data-val="true" data-val-enforcetrue="נא לאשר" data-val-required="The ContactAgree field is required." id="ContactAgree" name="ContactAgree" type="checkbox" value="true"><input name="ContactAgree" type="hidden" value="false">
+
+                                        <label class="label" for="ContactAgree">
+                                            אני מסכימ/ה לקבל מענה לפנייה באמצעות מייל, סמס או טלפון
+
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                                <div class="input_submit input_c clear">
+                                    <button type="submit" class="btn" id="buttonSendContact">
+                                        <span>
+                                            שליחה
+                                            <span class="hideFromView">שלח</span>
+                                        </span>
+                                    </button>
+                                </div>
+                                <div id="recaptchaContact" class="g-recaptcha">
+                                </div>
+                                <div id="status">
+
+                                </div>
+                                <div id="statusContact">
+                                </div>
+                                <input name="ufprt" type="hidden" value="7C343343F68DD072CB04CAAC97CBC78532DFD30D6C1E46B0716EFC023219C7A91A6267345AA227E7B996227462D2420BA4C35BBB1962EF8C1FB8A491985079E7B7EBC75A2E75F50FB10EF8B53D3EF45A183706B026AEA5FA3914CE5F235E75A109573663853B7306BE22EA94C4F5093CE19278EFD1F368A56083E2005B6D52A0B4DF3C06A92406168B659BB59623B3DD87C53887D401D40A1F989C05A074A24D">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div></div>
+            @*@Html.ValidationSummary("ContactViewModul", true)
+        @using (Ajax.BeginForm("SubmitForm", "ContactSurface", new AjaxOptions()
+        {
+            UpdateTargetId = "form-result",
+            HttpMethod = "POST",
+            InsertionMode = InsertionMode.Replace,
+            OnSuccess = "contactForm.showResult",
+            OnFailure = "contactForm.showResult"
+        }, new { id = "contact-form" }))
+        {
+            @Html.HiddenFor(m => m.ContactFormId)
+
+            <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                    <label>@Umbraco.GetDictionaryValue("Contact.Name")</label>
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = true, placeholder = Umbraco.GetDictionaryValue("Contact.Name") + "..." })
+                    @Html.ValidationMessageFor(m => m.Name)
+
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                    <label>@Umbraco.GetDictionaryValue("Contact.Email")</label>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", required = true, placeholder = Umbraco.GetDictionaryValue("Contact.Email") + "..." })
+                    @Html.ValidationMessageFor(m => m.Email)
+                </div>
+            </div>
+            <div class="input_c must">
+                <div class="input">
+                    <span class="field-validation-valid" data-valmsg-for="ContactPhone" data-valmsg-replace="true"></span>
+                    <label class="label" for="ContactPhone">טלפון</label>
+                    <input class="input_text ltr" data-val="true" data-val-regex="מספר טלפון אינו תקין" data-val-regex-pattern="[0-9\s\-]+" data-val-required="טלפון הוא שדה חובה" id="ContactPhone" maxlength="11" name="ContactPhone" type="text" value="">
+
+                </div>
+            </div>
+                <div class="control-group">
+                    <div class="form-group col-xs-12 floating-label-form-group controls">
+                        <label>@Umbraco.GetDictionaryValue("Contact.Message")</label>
+                        @Html.TextBoxFor(m => m.Message, new { @class = "form-control", required = true, placeholder = Umbraco.GetDictionaryValue("Contact.Message") + "...", rows = "6" })
+                        @Html.ValidationMessageFor(m => m.Message)
+                    </div>
+                </div>
+                <br>
+                <input type="hidden" name="GoogleCaptchaToken" id="GoogleCaptchaToken" />
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" id="sendMessageButton">@Umbraco.GetDictionaryValue("Contact.Send")</button>
+                </div>
+                }
+
+            </div>*@
+            }
+
+
+            <div id="form-result"></div>
+            @*
+        <div id="form-outer">
+            @using (Ajax.BeginForm("SubmitForm", "ContactSurfaceController", new AjaxOptions()
+            {
+                UpdateTargetId = "form-result",
+                HttpMethod = "POST",
+                InsertionMode = InsertionMode.Replace,
+                OnSuccess = "contactForm.showResult",
+                OnFailure = "contactForm.showResult"
+
+            }, new { id = "contact-form" }))
+            {
+
+            }
+
+            @Html.HiddenFor(m => m.ContactFormId)
+            <div class="control-group">
+                <div class="form-floating">
+                    <label for="name">Name</label>
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Name" })
+                    @Html.ValidationMessageFor(m => m.Name)
+                    <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                </div>
+                <div class="form-floating">
+                    <label for="email">Email address</label>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+                    @Html.ValidationMessageFor(m => m.Email)
+                    <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                    <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                </div>
+                <div class="form-floating">
+                    <label for="message">Message</label>
+                    @Html.TextAreaFor(m => m.Message, new { @class = "form-control", placeholder = "Message", row = "6" })
+                    @Html.ValidationMessageFor(m => m.Message)
+                    <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                </div>
+                <br />
+                <!-- Submit Button-->
+                <button class="btn btn-primary contact-submit" id="sendMessageButton" type="submit">Send</button>
+            </div>
+        </div>*@
+            @*<div id="form-result">
+
+        </div>*@
